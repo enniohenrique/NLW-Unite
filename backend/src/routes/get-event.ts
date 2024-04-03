@@ -11,19 +11,19 @@ export async function getEvent(app:FastifyInstance) {
                 eventId: z.string().uuid(),
             }),
             response: {
-                200: {
+                200: z.object({
                     event: z.object({
-                        id: z.string().uuid(), 
-                        title: z.string(),
-                        slug: z.string(),
-                        details: z.string().nullable(),
-                        maximumAttendees: z.number().int().nullable(),
-                        attendeesAmount: z.number().int(),
-                    }),
-                }
-            },
-        }
-    }, async (req, res) => {
+                    id: z.string().uuid(), 
+                    title: z.string(),
+                    slug: z.string(),
+                    details: z.string().nullable(),
+                    maximumAttendees: z.number().int().nullable(),
+                    attendeesAmount: z.number().int(),
+                }),
+            })
+        },
+    }
+}, async (req, res) => {
         const {eventId} = req.params
 
         const event = await prisma.event.findUnique({
