@@ -3,7 +3,17 @@ Content-Type: application/json
 
 
 {
-    "title":"unite summit",
-    "details":"Um evento para quem é apaixonado por programação",
-    "maximumAttendees":100
+    "title":"Evento ",
+    "details":null,
+    "maximumAttendees":1
+}
+
+###
+
+POST http://localhost:3333/events/8a96637c-138c-4f92-8ed8-f3c233cef870/attendees
+Content-Type: application/json
+
+{
+    "name":"Diego fernandes",
+    "email":"diego2@rockeseat.com.br"
 }
