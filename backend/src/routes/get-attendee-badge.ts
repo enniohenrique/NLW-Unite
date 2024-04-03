@@ -10,6 +10,14 @@ export async function getAttendeeBadge(app: FastifyInstance) {
                 attendeeId: z.coerce.number().int(),                
             }),
             response: {
+                200: z.object({
+                    badge: z.object({
+                        name: z.string(),
+                        email: z.string().email(),
+                        eventTitle: z.string(),
+                        checkInURL: z.string().url(),
+                    })
+                })
 
             },
         }
@@ -35,7 +43,19 @@ export async function getAttendeeBadge(app: FastifyInstance) {
             throw new Error('Attendee not found.')
         }
 
-        return res.send({attendee})
+
+        const baseURL = `${req.protocol}://${req.hostname}`
+        const checkInURL = new URL(`/attendees/${attendeeId}/check-in`, baseURL)
+        console.log(checkInURL)
+
+        return res.send({
+            badge: {
+                name: attendee.name,
+                email: attendee.email,
+                eventTitle: attendee.event.title,
+                checkInURL: checkInURL.toString(),
+            }
+        })
 
     })
 }
